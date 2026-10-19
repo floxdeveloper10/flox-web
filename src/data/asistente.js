@@ -7,7 +7,7 @@
 //     Si un nodo no tiene `replies`, se muestran las del inicio.
 // - `userLabel` en una respuesta es lo que se ve como mensaje del visitante (si no, se usa `label`).
 // - "Hablar con una persona" abre WhatsApp con un resumen de lo que eligió en la conversación.
-import { serviceById } from './precios.js'
+import { portfolio, serviceById } from './precios.js'
 import { rubrosMenu } from './rubrosMenu.js'
 
 const desde = (id) => `S/ ${serviceById[id].from.toLocaleString('es-PE')}`
@@ -114,7 +114,7 @@ export const asistente = {
     },
     precios: {
       messages: [
-        `Estos son nuestros precios de lanzamiento:\n• Carta digital con QR: desde ${desde('carta')}\n• Web de una página: desde ${desde('web1')}\n• Perfil de Google Maps y redes: desde ${desde('maps')}\n• App móvil: cotización según tu proyecto`,
+        `Estos son nuestros precios de lanzamiento:\n• Carta digital con QR: desde ${desde('carta')}\n• Web de una página: desde ${desde('web1')}\n• Perfil de Google Maps y redes: desde ${desde('maps')}\n• Portafolio profesional: desde S/ ${portfolio.from}\n• App móvil: cotización según tu proyecto`,
         'Trabajamos con 50 % de adelanto. En el cotizador armas tu proyecto y ves un precio referencial al instante.',
       ],
       links: [{ label: 'Usar el cotizador', to: '/cotizar' }],

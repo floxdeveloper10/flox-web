@@ -5,7 +5,7 @@ export const seo = {
   home: {
     title: 'FLOX | Webs, apps y WhatsApp para negocios en Cusco',
     description:
-      'Webs, apps móviles y atención por WhatsApp para restaurantes, hoteles, agencias y tiendas de Cusco. Te mostramos una demo gratis con tu negocio.',
+      'Ayudamos a negocios y profesionales de Cusco a vender más con webs, portafolios, cartas digitales con QR y atención automática por WhatsApp.',
   },
   nosotros: {
     title: 'Nosotros | FLOX Cusco',

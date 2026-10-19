@@ -1,0 +1,203 @@
+/* "Para profesionales": texto a la izquierda y maqueta a la derecha (debajo en el celular) */
+.pro__inner {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+.pro__eyebrow {
+  color: var(--flox-amarillo);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pro__title {
+  margin-top: 12px;
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  line-height: 1.15;
+}
+
+.pro__text {
+  margin-top: 14px;
+  max-width: 34em;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.pro__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pro__chips li {
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--flox-blanco);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.pro__cta {
+  margin-top: 28px;
+}
+
+.pro__cta svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ─── Maqueta del portafolio (solo CSS) ─────────────────────────────────── */
+.pro__visual {
+  display: flex;
+  justify-content: center;
+}
+
+.pro-mock {
+  width: min(100%, 340px);
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--flox-crema);
+  color: var(--flox-morado);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform: rotate(2deg);
+}
+
+/* Barra de navegador */
+.pro-mock__bar {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--flox-blanco);
+  border-bottom: 1px solid rgba(45, 20, 80, 0.08);
+}
+
+.pro-mock__bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--flox-fucsia);
+}
+
+.pro-mock__bar span:nth-child(2) {
+  background: var(--flox-amarillo);
+}
+
+.pro-mock__bar span:nth-child(3) {
+  background: var(--flox-turquesa);
+}
+
+.pro-mock__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26px 22px 24px;
+  text-align: center;
+  /* Franja de color detrás del avatar */
+  background: linear-gradient(180deg, rgba(232, 24, 93, 0.14) 0 64px, transparent 64px);
+}
+
+.pro-mock__avatar {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border: 4px solid var(--flox-blanco);
+  border-radius: 50%;
+  background: var(--flox-fucsia-texto);
+  color: var(--flox-blanco);
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 20px -10px rgba(45, 20, 80, 0.6);
+}
+
+.pro-mock__name {
+  margin-top: 14px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pro-mock__role {
+  margin-top: 2px;
+  color: var(--flox-texto-suave);
+  font-size: 0.92rem;
+}
+
+.pro-mock__skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pro-mock__skills li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 184, 169, 0.5);
+  background: var(--flox-blanco);
+  color: var(--flox-turquesa-texto);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.pro-mock__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--flox-morado);
+  color: var(--flox-blanco);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.pro-mock__button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Líneas de texto de relleno */
+.pro-mock__lines {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.pro-mock__lines span {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(45, 20, 80, 0.1);
+}
+
+.pro-mock__lines span:last-child {
+  width: 70%;
+  justify-self: center;
+}
+
+@media (min-width: 900px) {
+  .pro__inner {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  .pro-mock {
+    width: 360px;
+  }
+}

@@ -57,6 +57,14 @@ export const services = [
   },
 ]
 
+// Portafolio para profesionales (Precios y sección "Para profesionales").
+// No está en el cotizador: el cotizador es para negocios, por rubro.
+export const portfolio = {
+  id: 'portafolio',
+  name: 'Portafolio profesional',
+  from: 300, // precio real
+}
+
 // Extras: solo aparecen si aplican a lo elegido (appliesTo: ids de servicios)
 export const extras = [
   {

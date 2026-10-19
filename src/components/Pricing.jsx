@@ -17,27 +17,27 @@ export default function Pricing() {
         <ul className="pricing__grid">
           {pricing.plans.map((plan, i) => (
             <Reveal as="li" key={plan.name} delay={i * 0.1} className={plan.featured ? 'pricing__item--featured' : ''}>
-              <article className={`card plan ${plan.featured ? 'plan--featured' : ''} ${plan.quote ? 'plan--quote' : ''}`}>
+              <article className={`card plan ${plan.featured ? 'plan--featured' : ''}`}>
                 {plan.featured && <p className="plan__badge">{pricing.featuredLabel}</p>}
-                {plan.tag && <p className="plan__tag">{plan.tag}</p>}
                 <h3 className="plan__name">{plan.name}</h3>
-                {plan.quote ? (
-                  <p className="plan__price plan__price--quote">{plan.quote}</p>
-                ) : (
-                  <p className="plan__price">
-                    <span className="plan__from">{pricing.from}</span>
-                    <span className="plan__amount">S/ {plan.price}</span>
-                  </p>
-                )}
+                <p className="plan__price">
+                  <span className="plan__from">{pricing.from}</span>
+                  <span className="plan__amount">S/ {plan.price}</span>
+                </p>
 
-                <ul className="plan__features">
-                  {plan.features.map((feature) => (
-                    <li key={feature}>
-                      <Icon name="check" strokeWidth={3} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                {/* Lista de lo que incluye, o una línea corta (portafolio) */}
+                {plan.features ? (
+                  <ul className="plan__features">
+                    {plan.features.map((feature) => (
+                      <li key={feature}>
+                        <Icon name="check" strokeWidth={3} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="plan__summary">{plan.summary}</p>
+                )}
 
                 <a
                   className="btn btn--primary plan__cta"
@@ -52,6 +52,32 @@ export default function Pricing() {
             </Reveal>
           ))}
         </ul>
+
+        {/* App a medida: sin monto, en una franja aparte (amarillo de FLOX Apps) */}
+        <Reveal className="pricing__app">
+          <div className="pricing__app-head">
+            <p className="plan__tag">{pricing.app.tag}</p>
+            <h3 className="plan__name">{pricing.app.name}</h3>
+            <p className="pricing__app-quote">{pricing.app.quote}</p>
+          </div>
+          <ul className="pricing__app-features">
+            {pricing.app.features.map((feature) => (
+              <li key={feature}>
+                <Icon name="check" strokeWidth={3} />
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <a
+            className="btn btn--primary pricing__app-cta"
+            href={whatsappLink(pricing.app.message)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${pricing.app.cta}: ${pricing.app.name}`}
+          >
+            {pricing.app.cta}
+          </a>
+        </Reveal>
 
         <Reveal className="pricing__quote">
           <p>{pricing.quote.text}</p>

@@ -125,14 +125,27 @@
   text-underline-offset: 4px;
 }
 
-/* App a medida: sin monto, se cotiza (con el amarillo de FLOX Apps) */
-.plan--quote {
-  border-color: rgba(255, 194, 26, 0.7);
+/* Portafolio: una línea corta en vez de lista */
+.plan__summary {
+  margin: 20px 0 28px;
+  color: var(--flox-texto-suave);
+  line-height: 1.5;
+}
+
+/* App a medida: sin monto, en una franja amarilla debajo de las tarjetas */
+.pricing__app {
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
+  padding: 24px;
+  border: 2px solid rgba(255, 194, 26, 0.8);
+  border-radius: var(--radius-lg);
+  background: #fffaf0;
 }
 
 .plan__tag {
-  align-self: flex-start;
-  margin-bottom: 14px;
+  justify-self: start;
+  margin-bottom: 10px;
   padding: 5px 12px;
   border-radius: 999px;
   background: var(--flox-amarillo);
@@ -143,12 +156,51 @@
   text-transform: uppercase;
 }
 
-.plan__price--quote {
-  display: block;
-  font-size: 1.6rem;
+.pricing__app-head {
+  display: grid;
+}
+
+.pricing__app-quote {
+  margin-top: 4px;
+  font-size: 1.15rem;
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+}
+
+.pricing__app-features {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing__app-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.pricing__app-features .icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  color: var(--flox-turquesa-texto);
+}
+
+@media (min-width: 640px) {
+  .pricing__app-features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .pricing__app {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 32px;
+  }
 }
 
 /* Cuatro planes: 2×2 en tablet, 4 en fila en pantallas anchas */

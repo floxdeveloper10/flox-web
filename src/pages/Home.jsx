@@ -7,6 +7,7 @@ import HowWeWork from '../components/HowWeWork.jsx'
 import Testimonios from '../components/Testimonios.jsx'
 import Compromiso from '../components/Compromiso.jsx'
 import Pricing from '../components/Pricing.jsx'
+import Professionals from '../components/Professionals.jsx'
 import WhyFlox from '../components/WhyFlox.jsx'
 import Contact from '../components/Contact.jsx'
 import usePageMeta from '../hooks/usePageMeta.js'
@@ -44,6 +45,7 @@ export default function Home() {
       <Testimonios />
       <Compromiso />
       <Pricing />
+      <Professionals />
       <WhyFlox />
       <Contact />
     </>

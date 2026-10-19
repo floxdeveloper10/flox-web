@@ -1,12 +1,15 @@
 // Datos reales de FLOX. Cambiar aquí y se actualiza en toda la web.
 // Las redes pendientes van en null y no se muestran.
 // Los precios están en src/data/precios.js (un solo lugar para todos).
-import { serviceById } from './precios.js'
+import { portfolio, serviceById } from './precios.js'
 
-const PRICE = { carta: serviceById.carta.from, web1: serviceById.web1.from, maps: serviceById.maps.from }
+const PRICE = { carta: serviceById.carta.from, web1: serviceById.web1.from, maps: serviceById.maps.from, portfolio: portfolio.from }
 
 const WHATSAPP_NUMBER = '51927484492'
 const WHATSAPP_DEFAULT_MESSAGE = 'Hola FLOX, quiero una demo para mi negocio'
+// Portafolios profesionales (Precios y sección "Para profesionales")
+// → https://wa.me/51927484492?text=Hola%20FLOX%2C%20quiero%20un%20portafolio%20profesional
+export const PORTFOLIO_MESSAGE = 'Hola FLOX, quiero un portafolio profesional'
 
 export const site = {
   name: 'FLOX',
@@ -79,7 +82,8 @@ export const services = {
     {
       name: 'FLOX Web',
       accent: 'fucsia',
-      summary: 'Que te encuentren y te entiendan, en cualquier idioma.',
+      summary:
+        'Páginas web, cartas digitales con QR en varios idiomas, portafolios para profesionales y perfiles de Google Maps y redes.',
       features: [
         'Página web para tu negocio',
         'Carta digital con QR en varios idiomas',
@@ -251,20 +255,22 @@ export const pricing = {
       message: `Hola FLOX, quiero el Perfil de Google Maps y redes (desde S/ ${PRICE.maps})`,
     },
     {
-      name: 'App móvil a medida',
-      tag: 'FLOX Apps',
-      // Sin monto: se cotiza según las funciones de cada app
-      quote: 'Cotización según tu proyecto',
-      features: [
-        'Diseño personalizado',
-        'Android e iPhone',
-        'Panel para administrar',
-        'Soporte',
-      ],
-      cta: 'Cotizar mi app',
-      message: 'Hola FLOX, quiero cotizar una app móvil a medida para mi negocio',
+      name: 'Portafolio profesional',
+      price: PRICE.portfolio,
+      // Línea corta en vez de lista de características
+      summary: 'Tu CV, habilidades y proyectos en una web con tu nombre.',
+      message: PORTFOLIO_MESSAGE,
     },
   ],
+  // App a medida: sin monto (se cotiza según sus funciones). Va en una franja debajo de las tarjetas.
+  app: {
+    name: 'App móvil a medida',
+    tag: 'FLOX Apps',
+    quote: 'Cotización según tu proyecto',
+    features: ['Diseño personalizado', 'Android e iPhone', 'Panel para administrar', 'Soporte'],
+    cta: 'Cotizar mi app',
+    message: 'Hola FLOX, quiero cotizar una app móvil a medida para mi negocio',
+  },
   note: 'Precio de lanzamiento para los primeros clientes. Trabajamos con 50 % de adelanto.',
   custom: {
     before: '¿Necesitas algo distinto?',
@@ -275,6 +281,33 @@ export const pricing = {
   quote: {
     text: '¿Quieres saber cuánto costaría todo junto?',
     button: 'Cotiza tu proyecto',
+  },
+}
+
+// Sección "Para profesionales" (inicio, entre Precios y Por qué FLOX)
+export const professionals = {
+  id: 'profesionales',
+  eyebrow: '¿Trabajas por tu cuenta?',
+  title: 'Tu portafolio profesional, listo para compartir',
+  text: 'Ideal para guías de turismo, abogados, psicólogos, fotógrafos, arquitectos, artesanos y recién egresados.',
+  includesLabel: 'Qué incluye',
+  includes: [
+    'CV descargable',
+    'Habilidades y experiencia',
+    'Galería de proyectos',
+    'Testimonios',
+    'Botón de WhatsApp',
+    'Español e inglés (opcional)',
+  ],
+  cta: 'Quiero mi portafolio',
+  message: PORTFOLIO_MESSAGE,
+  // Maqueta de ejemplo (hecha solo con CSS)
+  sample: {
+    initials: 'RQ',
+    name: 'Rosa Quispe',
+    role: 'Guía de turismo',
+    skills: ['Inglés', 'Camino Inca', 'Primeros auxilios'],
+    button: 'Descargar CV',
   },
 }
 
