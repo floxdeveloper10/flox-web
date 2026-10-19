@@ -5,149 +5,277 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Ejemplo de portafolio profesional para guías de turismo, hecho por FLOX en Cusco.">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#173A31">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>Rosa Quispe · Guía</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<script>document.documentElement.classList.add("js")</script>
 <style>
-/* Layout: banner demo FLOX → hero de perfil → cifras → rutas → experiencia → habilidades → galería → testimonios → contacto. Una columna en móvil, dos en escritorio. */
+/* Bitácora de una guía andina:
+   franja FLOX → barra → portada (curvas de nivel + carné) → cifras → sobre mí → rutas con perfil
+   de altura → experiencia y habilidades → galería ilustrada → postales → contacto como boleto.
+   Animaciones solo con transform y opacity; con "reducir movimiento" no se anima nada. */
 :root{
-  --bg:#EDF0EA; --surface:#FFFFFF; --ink:#1C2724; --muted:#55625D; --line:#D3D9D1;
-  --pine:#23423A; --ochre:#B97A1C; --ochre-soft:#F3E3C6; --glacier:#3E7F96; --on-pine:#F4F6F1;
+  --paper:#F4EFE6; --paper-2:#EAE2D3; --card:#FFFCF6; --ink:#1B2420; --muted:#565E58; --line:#D8CEBD;
+  --pine:#173A31; --pine-2:#21503F; --moss:#5E7A3A; --ochre:#D39A3A; --ochre-ink:#85560F; --ochre-soft:#F3E2C2;
+  --clay:#A33B22; --glacier:#2F6E83; --snow:#FBF8F2; --on-pine:#F4EFE6; --gold:#E8B45A;
   --flox:#2D1450; --flox-cta:#FF6B1A;
-  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-display:"Fraunces",Georgia,"Times New Roman",serif;
   --f-body:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#121816; --surface:#1B2320; --ink:#E9EEE9; --muted:#A3B0AA; --line:#2E3A36;
-  --pine:#2C5248; --ochre:#E0A64A; --ochre-soft:#3A2E1A; --glacier:#79B7CC; --on-pine:#F4F6F1;
-  --flox:#3B1E66; --flox-cta:#FF7A30; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#121816; --surface:#1B2320; --ink:#E9EEE9; --muted:#A3B0AA; --line:#2E3A36;
-  --pine:#2C5248; --ochre:#E0A64A; --ochre-soft:#3A2E1A; --glacier:#79B7CC; --on-pine:#F4F6F1;
-  --flox:#3B1E66; --flox-cta:#FF7A30; color-scheme:dark}
-
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
-.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0}
-h2{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800}
-h3{font-size:1.15rem;font-weight:600}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,5.2vw,3.3rem)}
+h3{font-size:1.2rem}
 p{margin:0}
 a{color:inherit}
+button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--ochre);outline-offset:3px;border-radius:6px}
-.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre)}
-section{padding-block:56px}
-.sec-head{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+::selection{background:var(--gold);color:var(--ink)}
+.visually{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-/* Banner FLOX */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay)}
+.eyebrow::before{content:"";width:26px;height:2px;background:currentColor}
+.sec{padding-block:clamp(64px,10vw,112px)}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(28px,5vw,48px)}
+.sec-lead{max-width:52ch;color:var(--muted);font-size:1.05rem}
+
+/* Aparición al hacer scroll */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
+/* Tejido andino (separador) */
+.weave{height:22px;background:
+  linear-gradient(135deg,var(--clay) 25%,transparent 25%) -11px 0/22px 22px,
+  linear-gradient(225deg,var(--clay) 25%,transparent 25%) -11px 0/22px 22px,
+  linear-gradient(315deg,var(--gold) 25%,transparent 25%) 0 0/22px 22px,
+  linear-gradient(45deg,var(--gold) 25%,transparent 25%) 0 0/22px 22px,
+  var(--pine);
+  border-block:4px solid var(--pine)}
+
+/* ─── Franja FLOX ─── */
 .demo-bar{background:var(--flox);color:#fff}
-.demo-bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-block:10px;font-size:.88rem}
-.demo-bar a{background:var(--flox-cta);color:#fff;text-decoration:none;font-weight:600;padding:7px 14px;border-radius:999px;white-space:nowrap}
+.demo-bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;padding-block:9px;font-size:.86rem}
+.demo-bar span{display:inline-flex;align-items:center;gap:8px}
+.demo-bar span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--flox-cta)}
+.demo-bar a{background:var(--flox-cta);color:var(--flox);text-decoration:none;font-weight:700;padding:8px 16px;border-radius:999px;white-space:nowrap;transition:transform .2s var(--ease)}
+.demo-bar a:hover{transform:translateY(-2px)}
 
-/* Barra superior */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
-.mark{font-family:var(--f-display);font-weight:800;font-size:1.1rem}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
-.lang button{font:600 .82rem var(--f-body);border:0;background:transparent;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+/* ─── Barra superior ─── */
+.top{position:sticky;top:0;z-index:30;background:rgba(244,239,230,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:600;font-size:1.15rem}
+.mark i{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--pine);color:var(--gold);font-style:italic;font-size:.95rem}
+.nav{display:none;gap:4px}
+.nav a{font-size:.9rem;font-weight:500;text-decoration:none;padding:8px 12px;border-radius:999px;color:var(--muted);transition:color .2s}
+.nav a:hover{color:var(--ink)}
+@media(min-width:900px){.nav{display:flex}}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.lang button{font:600 .8rem var(--f-mono);letter-spacing:.06em;border:0;background:transparent;color:var(--muted);min-width:44px;min-height:36px;padding:0 12px;border-radius:999px;cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--pine);color:var(--on-pine)}
 
-/* Hero */
-.hero{background:var(--pine);color:var(--on-pine);position:relative;overflow:hidden;padding-block:56px 0}
-.hero-grid{display:grid;gap:28px;align-items:end;position:relative;z-index:1;padding-bottom:72px}
-@media(min-width:760px){.hero-grid{grid-template-columns:auto 1fr}}
-.avatar{width:132px;height:132px;border-radius:50%;background:var(--ochre);color:#1C2724;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:3rem;border:4px solid var(--on-pine)}
-.hero h1{font-size:clamp(2.4rem,7vw,4rem);font-weight:800}
-.hero .role{font-size:1.1rem;opacity:.9;margin-top:6px}
-.hero .eyebrow{color:#F0C27A}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.chip{font-size:.82rem;font-weight:500;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.35)}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.btn{font:600 .95rem var(--f-body);display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;border:0;cursor:pointer;text-decoration:none;transition:transform .15s}
+/* ─── Portada ─── */
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 85% 0%,var(--pine-2) 0%,var(--pine) 55%);color:var(--on-pine);padding-top:clamp(44px,8vw,88px)}
+.topo{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.topo path{fill:none;stroke:rgba(244,239,230,.09);stroke-width:1.2}
+.topo path:nth-child(4n){stroke:rgba(232,180,90,.16)}
+.hero-grid{position:relative;z-index:1;display:grid;gap:44px;align-items:center;padding-bottom:clamp(120px,16vw,170px)}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.25fr .85fr;gap:56px}}
+.hero .eyebrow{color:var(--gold)}
+.hero h1{margin-top:18px;font-size:clamp(3rem,10.5vw,6.4rem);font-weight:500;line-height:.92;letter-spacing:-.03em}
+.hero h1 em{display:block;font-style:italic;font-weight:400;color:var(--gold)}
+.hero .role{margin-top:22px;max-width:36ch;font-size:clamp(1.05rem,2.2vw,1.25rem);color:rgba(244,239,230,.88)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:.84rem;font-weight:500;padding:6px 13px;border-radius:999px;border:1px solid rgba(244,239,230,.32);background:rgba(244,239,230,.06)}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{font:600 .96rem var(--f-body);display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:transform .2s var(--ease)}
 .btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px;flex-shrink:0}
 .btn-wa{background:#25D366;color:#0B2E16}
-.btn-ghost{background:transparent;color:var(--on-pine);border:1.5px solid var(--on-pine)}
-.ridge{position:absolute;left:0;right:0;bottom:-1px;height:90px;width:100%}
-.ridge path{fill:var(--bg)}
-.ridge .far{fill:var(--bg);opacity:.25}
+.btn-ghost{background:transparent;color:var(--on-pine);box-shadow:inset 0 0 0 1.5px rgba(244,239,230,.7)}
+.btn-gold{background:var(--gold);color:var(--ink)}
 
-/* Cifras */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:-28px;position:relative;z-index:2}
+/* Carné de guía */
+.cred-wrap{position:relative;justify-self:center;width:min(100%,330px)}
+.cred{position:relative;background:var(--card);color:var(--ink);border-radius:18px;padding:18px 18px 16px;box-shadow:0 40px 70px -30px rgba(0,0,0,.65),0 0 0 1px rgba(0,0,0,.04);transform:rotate(-3deg)}
+.cred::before{content:"";position:absolute;inset:0 0 auto;height:10px;border-radius:18px 18px 0 0;background:repeating-linear-gradient(90deg,var(--clay) 0 14px,var(--gold) 14px 28px,var(--pine) 28px 42px)}
+.cred-top{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.flag{display:flex;width:26px;height:16px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.flag i{flex:1;background:#D91023}.flag i:nth-child(2){background:#fff}
+.cred-photo{position:relative;width:190px;height:190px;margin:18px auto 10px;display:grid;place-items:center}
+.ring{position:absolute;inset:0;width:100%;height:100%}
+.ring text{font-family:var(--f-mono);font-size:10.2px;letter-spacing:.22em;text-transform:uppercase;fill:var(--ochre-ink)}
+.spin{transform-origin:50% 50%;animation:spin 38s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.avatar{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-style:italic;font-weight:600;font-size:3.1rem;color:var(--snow);
+  background:radial-gradient(circle at 30% 25%,#2E6B58,var(--pine) 70%);box-shadow:inset 0 0 0 6px var(--card),0 0 0 2px var(--gold)}
+.cred-name{text-align:center;font-family:var(--f-display);font-weight:600;font-size:1.3rem;line-height:1.15}
+.cred-no{text-align:center;margin-top:4px;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.barcode{height:34px;margin-top:14px;border-radius:4px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 12px);opacity:.85}
+.alt-tag{position:absolute;right:-8px;top:20px;display:flex;flex-direction:column;align-items:flex-start;padding:10px 14px;border-radius:14px;background:var(--gold);color:var(--ink);box-shadow:0 18px 30px -16px rgba(0,0,0,.6);transform:rotate(5deg)}
+.alt-tag b{font-family:var(--f-display);font-size:1.45rem;line-height:1}
+.alt-tag span{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:420px){.alt-tag{right:-2px}}
+
+.ridges{position:absolute;left:0;right:0;bottom:-1px;height:clamp(90px,14vw,150px);width:100%;z-index:1}
+
+/* ─── Cifras ─── */
+.stats-wrap{position:relative;z-index:2;margin-top:-58px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);background:var(--card);border-radius:20px;box-shadow:0 30px 60px -36px rgba(23,58,49,.55),0 0 0 1px var(--line);overflow:hidden}
 @media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
-.stat{background:var(--surface);padding:18px 16px}
-.stat b{display:block;font-family:var(--f-display);font-size:1.9rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--pine)}
-:root[data-theme="dark"] .stat b{color:var(--ochre)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stat b{color:var(--ochre)}}
-.stat span{font-size:.85rem;color:var(--muted)}
+.stat{padding:22px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat:nth-child(2n){border-right:0}
+@media(min-width:760px){.stat{border-bottom:0}.stat:nth-child(2n){border-right:1px solid var(--line)}.stat:last-child{border-right:0}}
+@media(max-width:759px){.stat:nth-child(n+3){border-bottom:0}}
+.stat b{display:block;font-family:var(--f-display);font-weight:600;font-size:clamp(2rem,5vw,2.7rem);line-height:1;font-variant-numeric:tabular-nums;color:var(--pine)}
+.stat span{display:block;margin-top:8px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 
-.lead{max-width:62ch;font-size:1.05rem;color:var(--muted)}
+/* ─── Sobre mí ─── */
+.about{display:grid;gap:28px}
+@media(min-width:900px){.about{grid-template-columns:1fr 1fr;gap:64px;align-items:end}}
+.about h2{font-style:italic;font-weight:400}
+.about-text{display:grid;gap:18px;color:var(--muted);font-size:1.08rem}
+.geo{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--f-mono);font-size:.76rem;color:var(--ochre-ink)}
+.geo span{display:inline-flex;align-items:center;gap:6px}
+.geo span::before{content:"▲";font-size:.6rem}
+.sign{font-family:var(--f-display);font-style:italic;font-size:1.6rem;color:var(--pine)}
 
-/* Rutas */
-.routes{display:grid;gap:14px}
-@media(min-width:760px){.routes{grid-template-columns:repeat(2,1fr)}}
-.route{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;transition:transform .2s}
-.route:hover{transform:translateY(-3px)}
-.route-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.alt{font-family:var(--f-mono);font-size:.8rem;color:var(--glacier);white-space:nowrap}
-.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85rem;color:var(--muted)}
-.diff{display:flex;gap:3px;align-items:center}
-.diff i{width:14px;height:6px;border-radius:2px;background:var(--line)}
-.diff i.on{background:var(--ochre)}
-.profile{height:34px;width:100%}
-.profile path{fill:none;stroke:var(--glacier);stroke-width:2}
+/* ─── Rutas ─── */
+.routes-sec{background:var(--paper-2)}
+.routes{display:grid;gap:18px}
+@media(min-width:960px){.routes{grid-template-columns:.9fr 1.6fr;gap:28px;align-items:start}}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:960px){.tabs{grid-template-columns:1fr}}
+.tab{display:grid;gap:4px;text-align:left;padding:14px 16px;border:1.5px solid var(--line);border-radius:16px;background:var(--card);cursor:pointer;transition:transform .2s var(--ease)}
+.tab:hover{transform:translateY(-2px)}
+.tab .n{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;color:var(--ochre-ink)}
+.tab .t{font-family:var(--f-display);font-weight:600;font-size:1.06rem;line-height:1.2}
+.tab .m{font-size:.82rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--pine);border-color:var(--pine);color:var(--on-pine)}
+.tab[aria-selected="true"] .n{color:var(--gold)}
+.tab[aria-selected="true"] .m{color:rgba(244,239,230,.78)}
+.panel{background:var(--card);border-radius:22px;padding:clamp(18px,3vw,30px);box-shadow:0 0 0 1px var(--line)}
+.panel-in{transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.panel-in.out{opacity:0;transform:translateY(10px)}
+.rp-k{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--clay)}
+.rp-title{margin-top:8px;font-size:clamp(1.6rem,3.6vw,2.3rem)}
+.rp-desc{margin-top:10px;color:var(--muted);max-width:56ch}
+.chart{margin-top:18px;width:100%}
+.chart text{font-family:var(--f-mono);font-size:11px;fill:var(--muted)}
+.chart .peak-t{font-family:var(--f-display);font-weight:700;font-size:15px;fill:var(--ink)}
+.chart .peak-n{fill:var(--clay)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:18px 0 0;border-radius:14px;overflow:hidden;background:var(--line)}
+.facts div{background:var(--paper);padding:12px 14px}
+.facts dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:4px 0 0;font-family:var(--f-display);font-weight:600;font-size:1.05rem}
+.diff{display:flex;gap:3px;margin-top:6px}
+.diff svg{width:16px;height:12px}
+.diff path{fill:var(--line)}
+.diff .on path{fill:var(--ochre)}
+@media(max-width:460px){.facts{grid-template-columns:1fr 1fr}.facts div:last-child{grid-column:1/-1}}
 
-/* Experiencia */
-.two{display:grid;gap:40px}
-@media(min-width:860px){.two{grid-template-columns:1.2fr 1fr}}
-.timeline{list-style:none;margin:0;padding:0;display:grid;gap:20px;border-left:2px solid var(--line);padding-left:20px}
-.timeline li{position:relative;display:grid;gap:2px}
-.timeline li::before{content:"";position:absolute;left:-27px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--ochre)}
-.years{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
-.timeline p{color:var(--muted);font-size:.95rem}
+/* ─── Experiencia y habilidades ─── */
+.two{display:grid;gap:56px}
+@media(min-width:900px){.two{grid-template-columns:1.1fr 1fr;gap:72px}}
+.trail{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:30px}
+.trail::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;border-left:2px dashed var(--ochre)}
+.trail li{position:relative;padding-left:44px;display:grid;gap:4px}
+.trail li::before{content:"";position:absolute;left:0;top:2px;width:24px;height:20px;background:var(--pine);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.trail li:first-child::before{background:var(--clay)}
+.years{justify-self:start;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;padding:3px 10px;border-radius:999px;background:var(--ochre-soft);color:var(--ochre-ink)}
+.trail h3{font-size:1.22rem;margin-top:4px}
+.trail p{color:var(--muted);font-size:.96rem}
+.skills{display:grid;gap:20px}
+.skill-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-weight:600}
+.skill-row span:last-child{font-family:var(--f-mono);font-size:.78rem;font-weight:500;color:var(--ochre-ink)}
+.meter{position:relative;height:12px;margin-top:8px;border-radius:3px;background:var(--paper-2);overflow:hidden}
+.meter i{position:absolute;inset:0;background:linear-gradient(90deg,var(--pine),var(--moss));transform-origin:left;transform:scaleX(var(--v))}
+.meter::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 3px),var(--paper) calc(10% - 3px) 10%)}
+.js .rv .meter i{transform:scaleX(0);transition:transform 1.2s var(--ease) .2s}
+.js .rv.in .meter i{transform:scaleX(var(--v))}
+.stamps{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.stamp{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--clay);padding:9px 12px;border:2px dashed currentColor;border-radius:10px;outline:1px solid currentColor;outline-offset:3px;background:var(--card);transform:rotate(-2deg)}
+.stamp:nth-child(2){transform:rotate(1.5deg);color:var(--glacier)}
+.stamp:nth-child(3){transform:rotate(-1deg);color:var(--pine)}
 
-.skills{display:grid;gap:14px}
-.skill{display:grid;gap:6px}
-.skill-row{display:flex;justify-content:space-between;font-size:.92rem;font-weight:500}
-.skill-row span:last-child{color:var(--muted);font-weight:400}
-.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--pine);border-radius:99px}
-:root[data-theme="dark"] .bar i{background:var(--glacier)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bar i{background:var(--glacier)}}
-.certs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.cert{font-size:.82rem;padding:6px 12px;border-radius:8px;background:var(--ochre-soft);color:var(--ink)}
+/* ─── Galería ─── */
+.gal-sec{background:var(--pine);color:var(--on-pine)}
+.gal-sec .eyebrow{color:var(--gold)}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;gap:10px}
+.gallery .shot:first-child,.gallery .shot:last-child{grid-column:span 2}
+.gallery .shot:first-child{grid-row:span 2}
+@media(min-width:760px){
+  .gallery{grid-template-columns:repeat(3,1fr);grid-auto-rows:210px;gap:14px}
+  .gallery .shot:last-child{grid-column:auto}
+}
+.shot{position:relative;margin:0;border-radius:16px;overflow:hidden;background:#24463C}
+.shot svg{width:100%;height:100%;transition:transform 1.2s var(--ease)}
+.shot:hover svg{transform:scale(1.06)}
+.shot figcaption{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);line-height:1.25;display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;background:rgba(14,26,22,.72);color:#fff;padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.shot figcaption b{font-family:var(--f-mono);font-weight:500;color:var(--gold)}
 
-/* Galería */
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr)}}
-.shot{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:12px;overflow:hidden;margin:0}
-.shot svg{width:100%;height:100%;display:block}
-.shot figcaption{position:absolute;left:8px;bottom:8px;font-size:.75rem;font-weight:600;background:rgba(0,0,0,.55);color:#fff;padding:3px 9px;border-radius:6px}
+/* ─── Postales ─── */
+.quotes{display:grid;gap:22px}
+@media(min-width:860px){.quotes{grid-template-columns:repeat(3,1fr);gap:26px;align-items:start}}
+.card{position:relative;margin:0;background:var(--card);border-radius:6px;padding:26px 22px 22px;display:grid;gap:16px;box-shadow:0 22px 40px -30px rgba(23,58,49,.6),0 0 0 1px var(--line);transition:transform .35s var(--ease)}
+.card:nth-child(1){transform:rotate(-1.4deg)}
+.card:nth-child(2){transform:rotate(1deg)}
+.card:nth-child(3){transform:rotate(-.6deg)}
+.card:hover{transform:rotate(0) translateY(-6px)}
+@media(min-width:860px){.card:nth-child(2){margin-top:28px}}
+.card::after{content:"";position:absolute;left:22px;right:22px;bottom:12px;height:0;border-bottom:1px dashed var(--line)}
+.post-stamp{position:absolute;top:18px;right:18px;width:50px;height:58px;display:grid;place-items:center;font-family:var(--f-mono);font-size:.86rem;font-weight:500;color:var(--clay);background:var(--ochre-soft);border:3px dotted var(--card);box-shadow:0 0 0 3px var(--ochre-soft),inset 0 0 0 1px rgba(163,59,34,.35);transform:rotate(4deg)}
+.stars{color:#A8721A;letter-spacing:3px;font-size:1.05rem}
+.card blockquote{margin:0;font-family:var(--f-display);font-size:1.12rem;line-height:1.45;padding-right:52px}
+.card blockquote::before{content:"“";display:block;height:30px;font-size:3.6rem;line-height:1;color:var(--clay)}
+.card figcaption{font-size:.88rem;color:var(--muted);padding-bottom:10px}
+.card figcaption b{color:var(--ink)}
 
-/* Testimonios */
-.quotes{display:grid;gap:14px}
-@media(min-width:760px){.quotes{grid-template-columns:repeat(3,1fr)}}
-.quote{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px;margin:0}
-.stars{color:var(--ochre);letter-spacing:2px}
-.quote blockquote{margin:0;font-size:.95rem}
-.quote figcaption{margin-top:auto;font-size:.85rem;color:var(--muted)}
-.quote figcaption b{color:var(--ink);font-weight:600}
+/* ─── Contacto: boleto ─── */
+.ticket{display:grid;border-radius:24px;overflow:hidden;box-shadow:0 40px 70px -40px rgba(23,58,49,.7);
+  -webkit-mask:radial-gradient(circle 14px at 100% 50%,transparent 13px,#000 14px) right/51% 100% no-repeat,radial-gradient(circle 14px at 0 50%,transparent 13px,#000 14px) left/51% 100% no-repeat}
+.t-main{background:var(--pine);color:var(--on-pine);padding:clamp(26px,5vw,48px);display:grid;gap:18px;position:relative;overflow:hidden}
+.t-main .eyebrow{color:var(--gold)}
+.t-main h2{font-size:clamp(2rem,5vw,3rem)}
+.contact-list{display:grid;gap:8px;font-size:1rem}
+.contact-list div{display:flex;flex-wrap:wrap;gap:4px}
+.contact-list span{color:rgba(244,239,230,.72)}
+.t-stub{background:var(--gold);color:var(--ink);padding:clamp(22px,4vw,36px);display:grid;gap:14px;align-content:center;border-top:2px dashed rgba(27,36,32,.35)}
+.t-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.t-k{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:#3B3221}
+.t-v{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.2}
+.t-big{font-family:var(--f-display);font-weight:700;font-size:clamp(2.4rem,7vw,3.4rem);line-height:.95;letter-spacing:-.02em}
+.t-big small{display:block;font-family:var(--f-mono);font-size:.78rem;font-weight:500;letter-spacing:.08em;margin-top:6px}
+.t-stub .barcode{margin-top:4px;opacity:.9}
+@media(min-width:860px){
+  .ticket{grid-template-columns:1.55fr 1fr;-webkit-mask:radial-gradient(circle 16px at 60.8% 0,transparent 15px,#000 16px) top/100% 51% no-repeat,radial-gradient(circle 16px at 60.8% 100%,transparent 15px,#000 16px) bottom/100% 51% no-repeat}
+  .t-stub{border-top:0;border-left:2px dashed rgba(27,36,32,.35)}
+}
+@media(max-width:859px){.ticket{-webkit-mask:none}}
 
-/* Contacto */
-.contact{background:var(--pine);color:var(--on-pine);border-radius:20px;padding:32px 24px;display:grid;gap:18px}
-.contact .eyebrow{color:#F0C27A}
-.contact-list{display:grid;gap:6px;font-size:.95rem}
-.contact-list span{opacity:.75}
+footer{padding-block:34px 44px;text-align:center;font-size:.86rem;color:var(--muted);display:grid;gap:6px}
+footer a{color:var(--clay);font-weight:600}
 
-footer{padding-block:28px 40px;text-align:center;font-size:.85rem;color:var(--muted)}
-footer a{color:var(--ochre);font-weight:600}
-
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:.9rem;max-width:calc(100% - 32px);transition:opacity .25s,transform .25s;z-index:20;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:14px;font-size:.9rem;max-width:calc(100% - 32px);transition:opacity .25s,transform .25s;z-index:40;pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .js .rv{opacity:1;transform:none}
+  .js .rv .meter i{transform:scaleX(var(--v))}
+}
 </style>
 </head>
 <body>
@@ -157,145 +285,166 @@ footer a{color:var(--ochre);font-weight:600}
 </div></div>
 
 <header class="top"><div class="wrap">
-  <span class="mark">Rosa Quispe</span>
-  <div class="lang" role="group" aria-label="Idioma">
+  <a class="mark" href="#inicio"><i aria-hidden="true">RQ</i>Rosa Quispe</a>
+  <nav class="nav" aria-label="Secciones">
+    <a href="#sobre" data-i18n="navAbout">Sobre mí</a>
+    <a href="#rutas" data-i18n="navRoutes">Rutas</a>
+    <a href="#experiencia" data-i18n="navExp">Experiencia</a>
+    <a href="#galeria" data-i18n="navGal">Galería</a>
+    <a href="#contacto" data-i18n="navContact">Contacto</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Idioma / Language">
     <button id="btn-es" aria-pressed="true" data-lang="es">ES</button>
     <button id="btn-en" aria-pressed="false" data-lang="en">EN</button>
   </div>
 </div></header>
 
-<main>
+<main id="inicio">
 <section class="hero">
+  <svg class="topo" id="topo" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
   <div class="wrap hero-grid">
-    <div class="avatar" aria-hidden="true">RQ</div>
     <div>
-      <p class="eyebrow" data-i18n="heroEyebrow">Guía oficial de turismo · Cusco</p>
-      <h1>Rosa Quispe Huamán</h1>
-      <p class="role" data-i18n="heroRole">Te llevo por el Camino Inca, Ausangate y el Valle Sagrado, en tu idioma y a tu ritmo.</p>
-      <div class="chips">
+      <p class="eyebrow rv" data-i18n="heroEyebrow">Guía oficial de turismo · Cusco</p>
+      <h1 class="rv" style="--d:.08s">Rosa <em>Quispe Huamán</em></h1>
+      <p class="role rv" style="--d:.16s" data-i18n="heroRole">Te llevo por el Camino Inca, Ausangate y el Valle Sagrado, en tu idioma y a tu ritmo.</p>
+      <div class="chips rv" style="--d:.24s">
         <span class="chip" data-i18n="l1">Español</span><span class="chip" data-i18n="l2">Inglés</span><span class="chip" data-i18n="l3">Quechua</span><span class="chip" data-i18n="l4">Francés básico</span>
       </div>
-      <div class="actions">
-        <button class="btn btn-wa" data-toast="toastWa" data-i18n="ctaWa">Reservar por WhatsApp</button>
-        <button class="btn btn-ghost" data-toast="toastCv" data-i18n="ctaCv">Descargar CV (PDF)</button>
+      <div class="actions rv" style="--d:.32s">
+        <button class="btn btn-wa" data-toast="toastWa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.05 2C6.53 2 2.06 6.47 2.06 11.99c0 1.76.46 3.47 1.33 4.98L2 22l5.16-1.35a9.94 9.94 0 0 0 4.88 1.25h.01c5.51 0 9.98-4.47 9.99-9.98A9.93 9.93 0 0 0 12.05 2Zm5.84 14.13c-.25.7-1.44 1.33-2.01 1.42-.51.08-1.16.11-1.87-.12-.43-.14-.98-.32-1.69-.62-2.98-1.29-4.92-4.29-5.07-4.49-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.79-.37h.57c.18.01.43-.07.67.51.25.59.84 2.05.91 2.2.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.45.52-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.06 1.13 1.01 2.09 1.32 2.39 1.47.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.73.82 2.03.97.3.15.5.22.57.35.07.12.07.72-.18 1.42Z"/></svg><span data-i18n="ctaWa">Reservar por WhatsApp</span></button>
+        <button class="btn btn-ghost" data-toast="toastCv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg><span data-i18n="ctaCv">Descargar CV (PDF)</span></button>
       </div>
     </div>
+
+    <div class="cred-wrap rv" style="--d:.2s" aria-hidden="true">
+      <div class="cred">
+        <div class="cred-top"><span data-i18n="cardTitle">Carné de guía oficial</span><span class="flag"><i></i><i></i><i></i></span></div>
+        <div class="cred-photo">
+          <svg class="ring spin" viewBox="0 0 190 190"><defs><path id="ringPath" d="M95 95 m-80 0 a80 80 0 1 1 160 0 a80 80 0 1 1 -160 0"/></defs><text><textPath href="#ringPath" data-i18n="ring">Guía oficial · Cusco · Perú · Camino Inca · Ausangate ·</textPath></text></svg>
+          <div class="avatar">RQ</div>
+        </div>
+        <p class="cred-name">Rosa Quispe Huamán</p>
+        <p class="cred-no" data-i18n="cardNo">N.º 0427 · Vigente hasta 2027</p>
+        <div class="barcode"></div>
+      </div>
+      <div class="alt-tag"><b>5,036 m</b><span data-i18n="altTag">máx. alcanzado</span></div>
+    </div>
   </div>
-  <svg class="ridge" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true">
-    <path class="far" d="M0 90 L0 40 L120 10 L210 45 L330 5 L470 50 L560 20 L700 55 L820 15 L960 50 L1060 25 L1200 45 L1200 90Z"/>
-    <path d="M0 90 L0 70 L90 50 L180 72 L300 38 L420 70 L540 46 L640 74 L780 40 L900 72 L1010 52 L1120 70 L1200 58 L1200 90Z"/>
+  <svg class="ridges" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#2B5A4B" d="M0 150 L0 70 L90 40 L170 78 L260 22 L360 70 L450 34 L540 82 L650 18 L760 72 L860 38 L960 80 L1060 30 L1140 62 L1200 44 L1200 150Z"/>
+    <path fill="#3B6E5C" opacity=".9" d="M0 150 L0 98 L110 70 L210 104 L330 64 L440 100 L560 72 L680 108 L800 66 L920 104 L1030 76 L1130 100 L1200 84 L1200 150Z"/>
+    <path fill="#F4EFE6" d="M0 150 L0 128 L120 112 L240 132 L380 108 L520 134 L660 112 L800 136 L940 114 L1080 132 L1200 118 L1200 150Z"/>
   </svg>
 </section>
 
-<div class="wrap">
-  <div class="stats">
-    <div class="stat"><b>9</b><span data-i18n="s1">años guiando</span></div>
-    <div class="stat"><b>1,200+</b><span data-i18n="s2">viajeros acompañados</span></div>
-    <div class="stat"><b>4</b><span data-i18n="s3">idiomas</span></div>
-    <div class="stat"><b>4.9 ★</b><span data-i18n="s4">en reseñas de Google</span></div>
+<div class="wrap stats-wrap">
+  <div class="stats rv">
+    <div class="stat"><b data-count="9">9</b><span data-i18n="s1">años guiando</span></div>
+    <div class="stat"><b data-count="1200" data-suffix="+">1,200+</b><span data-i18n="s2">viajeros acompañados</span></div>
+    <div class="stat"><b data-count="4">4</b><span data-i18n="s3">idiomas</span></div>
+    <div class="stat"><b data-count="4.9" data-dec="1" data-suffix=" ★">4.9 ★</b><span data-i18n="s4">en reseñas de Google</span></div>
   </div>
 </div>
 
-<section><div class="wrap">
-  <div class="sec-head">
+<section class="sec" id="sobre"><div class="wrap about">
+  <div class="sec-head rv" style="margin:0">
     <p class="eyebrow" data-i18n="aboutEyebrow">Sobre mí</p>
     <h2 data-i18n="aboutTitle">Nací en Ollantaytambo y crecí entre andenes</h2>
   </div>
-  <p class="lead" data-i18n="aboutText">Soy licenciada en Turismo por la UNSAAC y guía oficial con carné vigente. Me gusta que cada viajero entienda lo que ve: por qué los muros incas no se caen, qué se siembra en cada piso ecológico y cómo se vive hoy en las comunidades.</p>
+  <div class="about-text rv" style="--d:.12s">
+    <p data-i18n="aboutText">Soy licenciada en Turismo por la UNSAAC y guía oficial con carné vigente. Me gusta que cada viajero entienda lo que ve: por qué los muros incas no se caen, qué se siembra en cada piso ecológico y cómo se vive hoy en las comunidades.</p>
+    <p class="geo"><span>Ollantaytambo · 2,792 m</span><span>Cusco · 3,399 m</span><span>13°31′S 71°58′W</span></p>
+    <p class="sign">— Rosa</p>
+  </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <div class="sec-head">
+<div class="weave" aria-hidden="true"></div>
+
+<section class="sec routes-sec" id="rutas"><div class="wrap">
+  <div class="sec-head rv">
     <p class="eyebrow" data-i18n="routesEyebrow">Rutas que guío</p>
     <h2 data-i18n="routesTitle">Del Valle Sagrado a los 5,000 metros</h2>
+    <p class="sec-lead" data-i18n="routesLead">Elige una ruta y mira su perfil de altura, de inicio a fin.</p>
   </div>
-  <div class="routes">
-    <article class="route">
-      <div class="route-top"><h3 data-i18n="r1">Camino Inca clásico</h3><span class="alt">máx. 4,215 m</span></div>
-      <svg class="profile" viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 L60 24 L110 4 L150 18 L190 10 L240 26 L300 28"/></svg>
-      <div class="meta"><span data-i18n="r1d">4 días · 42 km</span><span class="diff" aria-label="Dificultad 4 de 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-    </article>
-    <article class="route">
-      <div class="route-top"><h3 data-i18n="r2">Montaña de Colores</h3><span class="alt">máx. 5,036 m</span></div>
-      <svg class="profile" viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 L100 16 L180 8 L230 3 L300 22"/></svg>
-      <div class="meta"><span data-i18n="r2d">1 día · 10 km</span><span class="diff" aria-label="Dificultad 3 de 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
-    </article>
-    <article class="route">
-      <div class="route-top"><h3 data-i18n="r3">Valle Sagrado y Maras</h3><span class="alt">máx. 3,380 m</span></div>
-      <svg class="profile" viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 L70 26 L140 28 L200 18 L260 24 L300 20"/></svg>
-      <div class="meta"><span data-i18n="r3d">1 día · en van</span><span class="diff" aria-label="Dificultad 1 de 5"><i class="on"></i><i></i><i></i><i></i><i></i></span></div>
-    </article>
-    <article class="route">
-      <div class="route-top"><h3 data-i18n="r4">Machu Picchu en un día</h3><span class="alt">máx. 2,430 m</span></div>
-      <svg class="profile" viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 10 L90 26 L160 30 L210 20 L260 16 L300 22"/></svg>
-      <div class="meta"><span data-i18n="r4d">1 día · tren y bus</span><span class="diff" aria-label="Dificultad 2 de 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div>
-    </article>
+  <div class="routes rv" style="--d:.1s">
+    <div class="tabs" role="tablist" id="tabs" aria-label="Rutas"></div>
+    <div class="panel" role="tabpanel" id="route-panel" tabindex="0"><div class="panel-in" id="panel-in"></div></div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap two">
-  <div>
+<section class="sec" id="experiencia"><div class="wrap two">
+  <div class="rv">
     <div class="sec-head">
       <p class="eyebrow" data-i18n="expEyebrow">Experiencia</p>
       <h2 data-i18n="expTitle">Dónde he trabajado</h2>
     </div>
-    <ol class="timeline">
-      <li><span class="years">2021 — hoy</span><h3 data-i18n="e1">Guía independiente</h3><p data-i18n="e1d">Tours privados para familias y grupos pequeños, reservados directamente.</p></li>
+    <ol class="trail">
+      <li><span class="years" data-i18n="y1">2021 — hoy</span><h3 data-i18n="e1">Guía independiente</h3><p data-i18n="e1d">Tours privados para familias y grupos pequeños, reservados directamente.</p></li>
       <li><span class="years">2018 — 2021</span><h3 data-i18n="e2">Guía de trekking · agencia en Cusco</h3><p data-i18n="e2d">Camino Inca, Salkantay y Lares, con grupos de hasta 16 personas.</p></li>
       <li><span class="years">2017 — 2018</span><h3 data-i18n="e3">Orientadora · Parque Arqueológico de Sacsayhuamán</h3><p data-i18n="e3d">Atención a visitantes y apoyo en visitas escolares.</p></li>
     </ol>
   </div>
-  <div>
+  <div class="rv" style="--d:.12s">
     <div class="sec-head">
       <p class="eyebrow" data-i18n="skEyebrow">Habilidades</p>
       <h2 data-i18n="skTitle">Lo que llevo en la mochila</h2>
     </div>
     <div class="skills">
-      <div class="skill"><div class="skill-row"><span data-i18n="sk1">Inglés</span><span>C1</span></div><div class="bar"><i style="width:88%"></i></div></div>
-      <div class="skill"><div class="skill-row"><span data-i18n="sk2">Quechua</span><span data-i18n="native">Nativo</span></div><div class="bar"><i style="width:100%"></i></div></div>
-      <div class="skill"><div class="skill-row"><span data-i18n="sk3">Francés</span><span>A2</span></div><div class="bar"><i style="width:35%"></i></div></div>
-      <div class="skill"><div class="skill-row"><span data-i18n="sk4">Historia inca y colonial</span><span data-i18n="expert">Experta</span></div><div class="bar"><i style="width:92%"></i></div></div>
+      <div><div class="skill-row"><span data-i18n="sk1">Inglés</span><span>C1</span></div><div class="meter" style="--v:.88"><i></i></div></div>
+      <div><div class="skill-row"><span data-i18n="sk2">Quechua</span><span data-i18n="native">Nativo</span></div><div class="meter" style="--v:1"><i></i></div></div>
+      <div><div class="skill-row"><span data-i18n="sk3">Francés</span><span>A2</span></div><div class="meter" style="--v:.35"><i></i></div></div>
+      <div><div class="skill-row"><span data-i18n="sk4">Historia inca y colonial</span><span data-i18n="expert">Experta</span></div><div class="meter" style="--v:.92"><i></i></div></div>
     </div>
-    <div class="certs">
-      <span class="cert" data-i18n="c1">Primeros auxilios en altura</span>
-      <span class="cert" data-i18n="c2">Carné de guía oficial · MINCETUR</span>
-      <span class="cert" data-i18n="c3">Lic. en Turismo · UNSAAC</span>
+    <div class="stamps">
+      <span class="stamp" data-i18n="c1">Primeros auxilios en altura</span>
+      <span class="stamp" data-i18n="c2">Carné de guía oficial · MINCETUR</span>
+      <span class="stamp" data-i18n="c3">Lic. en Turismo · UNSAAC</span>
     </div>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <div class="sec-head">
+<section class="sec gal-sec" id="galeria"><div class="wrap">
+  <div class="sec-head rv">
     <p class="eyebrow" data-i18n="galEyebrow">Galería</p>
     <h2 data-i18n="galTitle">Momentos con mis grupos</h2>
   </div>
-  <div class="gallery" id="gallery"></div>
+  <div class="gallery rv" style="--d:.1s" id="gallery"></div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <div class="sec-head">
+<section class="sec"><div class="wrap">
+  <div class="sec-head rv">
     <p class="eyebrow" data-i18n="tEyebrow">Testimonios</p>
     <h2 data-i18n="tTitle">Lo que dicen los viajeros</h2>
   </div>
   <div class="quotes">
-    <figure class="quote"><span class="stars" aria-label="5 de 5">★★★★★</span><blockquote data-i18n="q1">Rosa hizo que el Camino Inca fuera inolvidable. Nos esperaba en cada subida y nos contaba la historia de cada sitio.</blockquote><figcaption><b>Emma R.</b> · Canadá</figcaption></figure>
-    <figure class="quote"><span class="stars" aria-label="5 de 5">★★★★★</span><blockquote data-i18n="q2">Viajamos con dos niños y adaptó todo el tour a su ritmo. Muy puntual y muy clara.</blockquote><figcaption><b>Familia Moreno</b> · Lima</figcaption></figure>
-    <figure class="quote"><span class="stars" aria-label="5 de 5">★★★★★</span><blockquote data-i18n="q3">Su conocimiento del quechua y de las comunidades le dio otro sentido al viaje.</blockquote><figcaption><b>Julien P.</b> · Francia</figcaption></figure>
+    <figure class="card rv"><span class="post-stamp" aria-hidden="true">CA</span><span class="stars" role="img" aria-label="5/5">★★★★★</span><blockquote data-i18n="q1">Rosa hizo que el Camino Inca fuera inolvidable. Nos esperaba en cada subida y nos contaba la historia de cada sitio.</blockquote><figcaption><b>Emma R.</b> · Canadá</figcaption></figure>
+    <figure class="card rv" style="--d:.1s"><span class="post-stamp" aria-hidden="true">PE</span><span class="stars" role="img" aria-label="5/5">★★★★★</span><blockquote data-i18n="q2">Viajamos con dos niños y adaptó todo el tour a su ritmo. Muy puntual y muy clara.</blockquote><figcaption><b>Familia Moreno</b> · Lima</figcaption></figure>
+    <figure class="card rv" style="--d:.2s"><span class="post-stamp" aria-hidden="true">FR</span><span class="stars" role="img" aria-label="5/5">★★★★★</span><blockquote data-i18n="q3">Su conocimiento del quechua y de las comunidades le dio otro sentido al viaje.</blockquote><figcaption><b>Julien P.</b> · Francia</figcaption></figure>
   </div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">
-  <div class="contact">
-    <p class="eyebrow" data-i18n="ctEyebrow">Contacto</p>
-    <h2 data-i18n="ctTitle">¿Planeas tu viaje a Cusco?</h2>
-    <div class="contact-list">
-      <div><span>WhatsApp · </span>+51 900 000 000</div>
-      <div><span>Email · </span>rosa.guia@ejemplo.com</div>
-      <div><span data-i18n="ctBase">Base · </span>Cusco, Perú</div>
+<section class="sec" id="contacto" style="padding-top:0"><div class="wrap">
+  <div class="ticket rv">
+    <div class="t-main">
+      <p class="eyebrow" data-i18n="ctEyebrow">Contacto</p>
+      <h2 data-i18n="ctTitle">¿Planeas tu viaje a Cusco?</h2>
+      <div class="contact-list">
+        <div><span>WhatsApp · </span>+51 900 000 000</div>
+        <div><span>Email · </span>rosa.guia@ejemplo.com</div>
+        <div><span data-i18n="ctBase">Base · </span>Cusco, Perú</div>
+      </div>
+      <div class="actions" style="margin-top:6px">
+        <button class="btn btn-wa" data-toast="toastWa"><span data-i18n="ctaWa">Reservar por WhatsApp</span></button>
+        <button class="btn btn-ghost" data-toast="toastCv"><span data-i18n="ctaCv">Descargar CV (PDF)</span></button>
+      </div>
     </div>
-    <div class="actions" style="margin-top:0">
-      <button class="btn btn-wa" data-toast="toastWa" data-i18n="ctaWa">Reservar por WhatsApp</button>
-      <button class="btn btn-ghost" data-toast="toastCv" data-i18n="ctaCv">Descargar CV (PDF)</button>
+    <div class="t-stub">
+      <div><p class="t-k" data-i18n="tkDest">Destino</p><p class="t-big">CUSCO<small>3,399 m · PERÚ</small></p></div>
+      <div class="t-row">
+        <div><p class="t-k" data-i18n="tkSeason">Mejor temporada</p><p class="t-v" data-i18n="tkSeasonV">Abril – Noviembre</p></div>
+        <div><p class="t-k" data-i18n="tkGroup">Grupos</p><p class="t-v" data-i18n="tkGroupV">Privados · hasta 12</p></div>
+      </div>
+      <div class="barcode" aria-hidden="true"></div>
     </div>
   </div>
 </div></section>
@@ -310,37 +459,130 @@ footer a{color:var(--ochre);font-weight:600}
 
 <script>
 const T={
-es:{demo:"Ejemplo de portafolio profesional hecho por FLOX",demoCta:"Quiero uno así",heroEyebrow:"Guía oficial de turismo · Cusco",heroRole:"Te llevo por el Camino Inca, Ausangate y el Valle Sagrado, en tu idioma y a tu ritmo.",l1:"Español",l2:"Inglés",l3:"Quechua",l4:"Francés básico",ctaWa:"Reservar por WhatsApp",ctaCv:"Descargar CV (PDF)",s1:"años guiando",s2:"viajeros acompañados",s3:"idiomas",s4:"en reseñas de Google",aboutEyebrow:"Sobre mí",aboutTitle:"Nací en Ollantaytambo y crecí entre andenes",aboutText:"Soy licenciada en Turismo por la UNSAAC y guía oficial con carné vigente. Me gusta que cada viajero entienda lo que ve: por qué los muros incas no se caen, qué se siembra en cada piso ecológico y cómo se vive hoy en las comunidades.",routesEyebrow:"Rutas que guío",routesTitle:"Del Valle Sagrado a los 5,000 metros",r1:"Camino Inca clásico",r1d:"4 días · 42 km",r2:"Montaña de Colores",r2d:"1 día · 10 km",r3:"Valle Sagrado y Maras",r3d:"1 día · en van",r4:"Machu Picchu en un día",r4d:"1 día · tren y bus",expEyebrow:"Experiencia",expTitle:"Dónde he trabajado",e1:"Guía independiente",e1d:"Tours privados para familias y grupos pequeños, reservados directamente.",e2:"Guía de trekking · agencia en Cusco",e2d:"Camino Inca, Salkantay y Lares, con grupos de hasta 16 personas.",e3:"Orientadora · Parque Arqueológico de Sacsayhuamán",e3d:"Atención a visitantes y apoyo en visitas escolares.",skEyebrow:"Habilidades",skTitle:"Lo que llevo en la mochila",sk1:"Inglés",sk2:"Quechua",sk3:"Francés",sk4:"Historia inca y colonial",native:"Nativo",expert:"Experta",c1:"Primeros auxilios en altura",c2:"Carné de guía oficial · MINCETUR",c3:"Lic. en Turismo · UNSAAC",galEyebrow:"Galería",galTitle:"Momentos con mis grupos",tEyebrow:"Testimonios",tTitle:"Lo que dicen los viajeros",q1:"Rosa hizo que el Camino Inca fuera inolvidable. Nos esperaba en cada subida y nos contaba la historia de cada sitio.",q2:"Viajamos con dos niños y adaptó todo el tour a su ritmo. Muy puntual y muy clara.",q3:"Su conocimiento del quechua y de las comunidades le dio otro sentido al viaje.",ctEyebrow:"Contacto",ctTitle:"¿Planeas tu viaje a Cusco?",ctBase:"Base · ",foot:"Rosa Quispe es un personaje de ejemplo. Los datos de contacto son ficticios.",made:"Portafolio hecho por",toastWa:"En tu portafolio, este botón abre tu WhatsApp con un mensaje listo.",toastCv:"En tu portafolio, este botón descarga tu CV en PDF.",g:["Inti Punku al amanecer","Ausangate","Andenes de Moray","Salineras de Maras","Grupo en Salkantay","Laguna Humantay"]},
-en:{demo:"Sample professional portfolio made by FLOX",demoCta:"I want one",heroEyebrow:"Licensed tour guide · Cusco",heroRole:"I'll take you along the Inca Trail, Ausangate and the Sacred Valley, in your language and at your pace.",l1:"Spanish",l2:"English",l3:"Quechua",l4:"Basic French",ctaWa:"Book on WhatsApp",ctaCv:"Download CV (PDF)",s1:"years guiding",s2:"travelers guided",s3:"languages",s4:"on Google reviews",aboutEyebrow:"About me",aboutTitle:"Born in Ollantaytambo, raised among terraces",aboutText:"I hold a degree in Tourism from UNSAAC and an official guide license. I want every traveler to understand what they see: why Inca walls don't fall, what grows at each altitude, and how communities live today.",routesEyebrow:"Routes I guide",routesTitle:"From the Sacred Valley to 5,000 meters",r1:"Classic Inca Trail",r1d:"4 days · 42 km",r2:"Rainbow Mountain",r2d:"1 day · 10 km",r3:"Sacred Valley & Maras",r3d:"1 day · by van",r4:"Machu Picchu in a day",r4d:"1 day · train & bus",expEyebrow:"Experience",expTitle:"Where I've worked",e1:"Independent guide",e1d:"Private tours for families and small groups, booked directly.",e2:"Trekking guide · Cusco agency",e2d:"Inca Trail, Salkantay and Lares, with groups of up to 16.",e3:"Visitor guide · Sacsayhuamán Archaeological Park",e3d:"Visitor assistance and school group tours.",skEyebrow:"Skills",skTitle:"What's in my backpack",sk1:"English",sk2:"Quechua",sk3:"French",sk4:"Inca & colonial history",native:"Native",expert:"Expert",c1:"High-altitude first aid",c2:"Official guide license · MINCETUR",c3:"B.A. in Tourism · UNSAAC",galEyebrow:"Gallery",galTitle:"Moments with my groups",tEyebrow:"Reviews",tTitle:"What travelers say",q1:"Rosa made the Inca Trail unforgettable. She waited for us on every climb and told us the story of each site.",q2:"We traveled with two kids and she adapted the whole tour to their pace. Punctual and very clear.",q3:"Her knowledge of Quechua and the communities gave the trip a whole new meaning.",ctEyebrow:"Contact",ctTitle:"Planning your trip to Cusco?",ctBase:"Based in · ",foot:"Rosa Quispe is a sample character. Contact details are fictional.",made:"Portfolio made by",toastWa:"In your portfolio, this button opens your WhatsApp with a ready message.",toastCv:"In your portfolio, this button downloads your CV as a PDF.",g:["Sun Gate at dawn","Ausangate","Moray terraces","Maras salt mines","Group at Salkantay","Humantay Lake"]}
+es:{demo:"Ejemplo de portafolio profesional hecho por FLOX",demoCta:"Quiero uno así",navAbout:"Sobre mí",navRoutes:"Rutas",navExp:"Experiencia",navGal:"Galería",navContact:"Contacto",heroEyebrow:"Guía oficial de turismo · Cusco",heroRole:"Te llevo por el Camino Inca, Ausangate y el Valle Sagrado, en tu idioma y a tu ritmo.",l1:"Español",l2:"Inglés",l3:"Quechua",l4:"Francés básico",ctaWa:"Reservar por WhatsApp",ctaCv:"Descargar CV (PDF)",cardTitle:"Carné de guía oficial",ring:"Guía oficial · Cusco · Perú · Camino Inca · Ausangate ·",cardNo:"N.º 0427 · Vigente hasta 2027",altTag:"máx. alcanzado",s1:"años guiando",s2:"viajeros acompañados",s3:"idiomas",s4:"en reseñas de Google",aboutEyebrow:"Sobre mí",aboutTitle:"Nací en Ollantaytambo y crecí entre andenes",aboutText:"Soy licenciada en Turismo por la UNSAAC y guía oficial con carné vigente. Me gusta que cada viajero entienda lo que ve: por qué los muros incas no se caen, qué se siembra en cada piso ecológico y cómo se vive hoy en las comunidades.",routesEyebrow:"Rutas que guío",routesTitle:"Del Valle Sagrado a los 5,000 metros",routesLead:"Elige una ruta y mira su perfil de altura, de inicio a fin.",routesLabel:"Rutas",route:"Ruta",rpMax:"Altitud máx.",rpTime:"Duración",rpDiff:"Dificultad",of5:"de 5",chartLabel:"Perfil de altura",r1:"Camino Inca clásico",r1d:"4 días · 42 km",r1x:"El camino original hacia Machu Picchu: andenes, nubes y la llegada por la Puerta del Sol al cuarto día.",r2:"Montaña de Colores",r2d:"1 día · 10 km",r2x:"Subida corta pero exigente hasta los 5,036 m, con vista al nevado Ausangate.",r3:"Valle Sagrado y Maras",r3d:"1 día · en van",r3x:"Los andenes circulares de Moray y las salineras de Maras, con almuerzo en el valle.",r4:"Machu Picchu en un día",r4d:"1 día · tren y bus",r4x:"Tren por el valle del Urubamba y visita guiada por la ciudadela, sin prisas.",expEyebrow:"Experiencia",expTitle:"Dónde he trabajado",y1:"2021 — hoy",e1:"Guía independiente",e1d:"Tours privados para familias y grupos pequeños, reservados directamente.",e2:"Guía de trekking · agencia en Cusco",e2d:"Camino Inca, Salkantay y Lares, con grupos de hasta 16 personas.",e3:"Orientadora · Parque Arqueológico de Sacsayhuamán",e3d:"Atención a visitantes y apoyo en visitas escolares.",skEyebrow:"Habilidades",skTitle:"Lo que llevo en la mochila",sk1:"Inglés",sk2:"Quechua",sk3:"Francés",sk4:"Historia inca y colonial",native:"Nativo",expert:"Experta",c1:"Primeros auxilios en altura",c2:"Carné de guía oficial · MINCETUR",c3:"Lic. en Turismo · UNSAAC",galEyebrow:"Galería",galTitle:"Momentos con mis grupos",tEyebrow:"Testimonios",tTitle:"Lo que dicen los viajeros",q1:"Rosa hizo que el Camino Inca fuera inolvidable. Nos esperaba en cada subida y nos contaba la historia de cada sitio.",q2:"Viajamos con dos niños y adaptó todo el tour a su ritmo. Muy puntual y muy clara.",q3:"Su conocimiento del quechua y de las comunidades le dio otro sentido al viaje.",ctEyebrow:"Contacto",ctTitle:"¿Planeas tu viaje a Cusco?",ctBase:"Base · ",tkDest:"Destino",tkSeason:"Mejor temporada",tkSeasonV:"Abril – Noviembre",tkGroup:"Grupos",tkGroupV:"Privados · hasta 12",foot:"Rosa Quispe es un personaje de ejemplo. Los datos de contacto son ficticios.",made:"Portafolio hecho por",toastWa:"En tu portafolio, este botón abre tu WhatsApp con un mensaje listo.",toastCv:"En tu portafolio, este botón descarga tu CV en PDF.",g:["Inti Punku al amanecer","Ausangate","Andenes de Moray","Salineras de Maras","Grupo en Salkantay","Laguna Humantay"]},
+en:{demo:"Sample professional portfolio made by FLOX",demoCta:"I want one",navAbout:"About",navRoutes:"Routes",navExp:"Experience",navGal:"Gallery",navContact:"Contact",heroEyebrow:"Licensed tour guide · Cusco",heroRole:"I'll take you along the Inca Trail, Ausangate and the Sacred Valley, in your language and at your pace.",l1:"Spanish",l2:"English",l3:"Quechua",l4:"Basic French",ctaWa:"Book on WhatsApp",ctaCv:"Download CV (PDF)",cardTitle:"Official guide license",ring:"Licensed guide · Cusco · Peru · Inca Trail · Ausangate ·",cardNo:"No. 0427 · Valid until 2027",altTag:"highest reached",s1:"years guiding",s2:"travelers guided",s3:"languages",s4:"on Google reviews",aboutEyebrow:"About me",aboutTitle:"Born in Ollantaytambo, raised among terraces",aboutText:"I hold a degree in Tourism from UNSAAC and an official guide license. I want every traveler to understand what they see: why Inca walls don't fall, what grows at each altitude, and how communities live today.",routesEyebrow:"Routes I guide",routesTitle:"From the Sacred Valley to 5,000 meters",routesLead:"Pick a route to see its elevation profile, start to finish.",routesLabel:"Routes",route:"Route",rpMax:"Max altitude",rpTime:"Duration",rpDiff:"Difficulty",of5:"of 5",chartLabel:"Elevation profile",r1:"Classic Inca Trail",r1d:"4 days · 42 km",r1x:"The original path to Machu Picchu: terraces, clouds and the arrival through the Sun Gate on day four.",r2:"Rainbow Mountain",r2d:"1 day · 10 km",r2x:"A short but demanding climb to 5,036 m, facing the snow-capped Ausangate.",r3:"Sacred Valley & Maras",r3d:"1 day · by van",r3x:"The circular terraces of Moray and the Maras salt mines, with lunch in the valley.",r4:"Machu Picchu in a day",r4d:"1 day · train & bus",r4x:"A train ride along the Urubamba valley and an unhurried guided visit of the citadel.",expEyebrow:"Experience",expTitle:"Where I've worked",y1:"2021 — today",e1:"Independent guide",e1d:"Private tours for families and small groups, booked directly.",e2:"Trekking guide · Cusco agency",e2d:"Inca Trail, Salkantay and Lares, with groups of up to 16.",e3:"Visitor guide · Sacsayhuamán Archaeological Park",e3d:"Visitor assistance and school group tours.",skEyebrow:"Skills",skTitle:"What's in my backpack",sk1:"English",sk2:"Quechua",sk3:"French",sk4:"Inca & colonial history",native:"Native",expert:"Expert",c1:"High-altitude first aid",c2:"Official guide license · MINCETUR",c3:"B.A. in Tourism · UNSAAC",galEyebrow:"Gallery",galTitle:"Moments with my groups",tEyebrow:"Reviews",tTitle:"What travelers say",q1:"Rosa made the Inca Trail unforgettable. She waited for us on every climb and told us the story of each site.",q2:"We traveled with two kids and she adapted the whole tour to their pace. Punctual and very clear.",q3:"Her knowledge of Quechua and the communities gave the trip a whole new meaning.",ctEyebrow:"Contact",ctTitle:"Planning your trip to Cusco?",ctBase:"Based in · ",tkDest:"Destination",tkSeason:"Best season",tkSeasonV:"April – November",tkGroup:"Groups",tkGroupV:"Private · up to 12",foot:"Rosa Quispe is a sample character. Contact details are fictional.",made:"Portfolio made by",toastWa:"In your portfolio, this button opens your WhatsApp with a ready message.",toastCv:"In your portfolio, this button downloads your CV as a PDF.",g:["Sun Gate at dawn","Ausangate","Moray terraces","Maras salt mines","Group at Salkantay","Humantay Lake"]}
 };
-const scenes=[
- ["#F2B66B","#C97B4A","#6D4C5E","#3B2F45"],
- ["#BFDDEB","#8FB3C7","#E9F1F5","#4F6B78"],
- ["#D8E6B8","#8DAA5B","#5E7A3A","#3C5228"],
- ["#EAF2F5","#F7F7F2","#D9D3C9","#9C8F80"],
- ["#F6D8A8","#A9B9C9","#6F8597","#3E5263"],
- ["#CFE7E4","#5FB3AA","#2F7F7A","#2B4E4B"]
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fmt=n=>n.toLocaleString("en-US");
+let lang="es";
+
+/* ─── Curvas de nivel de la portada ─── */
+(function topo(){
+  const svg=document.getElementById("topo");let out="";
+  const peaks=[[900,180,15],[260,560,10]];
+  peaks.forEach(([cx,cy,n],p)=>{for(let k=1;k<=n;k++){const R=k*34;let d="";
+    for(let a=0;a<=64;a++){const t=a/64*Math.PI*2;const w=1+.16*Math.sin(3*t+k*.7+p)+.09*Math.sin(5*t-k*.4)+.05*Math.cos(7*t+p*2);
+      d+=(a?"L":"M")+(cx+Math.cos(t)*R*1.35*w).toFixed(1)+" "+(cy+Math.sin(t)*R*w).toFixed(1)}
+    out+=`<path d="${d}Z"/>`}});
+  svg.innerHTML=out;
+})();
+
+/* ─── Rutas: pestañas y perfil de altura ─── */
+const routes=[
+ {k:"r1",max:4215,diff:4,pts:[["Km 82",2720],["Wayllabamba",3000],["Warmiwañusqa",4215],["Pacaymayo",3600],["Runkurakay",3950],["Phuyupatamarka",3680],["Wiñay Wayna",2650],["Machu Picchu",2430]]},
+ {k:"r2",max:5036,diff:3,pts:[["Quesiuno",4326],["Pampa Chiri",4580],["Vinicunca",5036],["Mirador",4810],["Quesiuno",4326]]},
+ {k:"r3",max:3380,diff:1,pts:[["Urubamba",2870],["Maras",3380],["Moray",3350],["Salineras",3000],["Pichingoto",2880]]},
+ {k:"r4",max:2430,diff:2,pts:[["Aguas Calientes",2040],["Puente Ruinas",2000],["Machu Picchu",2430],["Aguas Calientes",2040]]}
 ];
-function drawScene(c,i){
-  const s=i*37+11,r=n=>((Math.sin(s*n)*10000)%1+1)%1;
-  let peaks1="",peaks2="";
-  for(let x=0;x<=400;x+=50)peaks1+=` L${x} ${110+r(x+1)*70}`;
-  for(let x=0;x<=400;x+=40)peaks2+=` L${x} ${180+r(x+7)*60}`;
-  return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></linearGradient></defs><rect width="400" height="300" fill="url(#sk${i})"/><circle cx="${300-r(3)*200}" cy="70" r="22" fill="#FFF6DD" opacity=".85"/><path d="M0 300${peaks1} L400 300Z" fill="${c[2]}"/><path d="M0 300${peaks2} L400 300Z" fill="${c[3]}"/></svg>`;
+let current=0;
+const tabs=document.getElementById("tabs"),panel=document.getElementById("route-panel"),panelIn=document.getElementById("panel-in");
+function renderTabs(){
+  tabs.setAttribute("aria-label",T[lang].routesLabel);
+  tabs.innerHTML=routes.map((r,i)=>`<button class="tab" role="tab" id="tab-${i}" aria-controls="route-panel" aria-selected="${i===current}" tabindex="${i===current?0:-1}"><span class="n">${T[lang].route.toUpperCase()} 0${i+1}</span><span class="t">${T[lang][r.k]}</span><span class="m">${T[lang][r.k+"d"]}</span></button>`).join("");
+  panel.setAttribute("aria-labelledby","tab-"+current);
+}
+function smooth(p){let d=`M${p[0][0]} ${p[0][1]}`;for(let i=0;i<p.length-1;i++){const p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p2;
+  const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+  d+=` C${c1[0].toFixed(1)} ${c1[1].toFixed(1)},${c2[0].toFixed(1)} ${c2[1].toFixed(1)},${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`}return d}
+function chart(r){
+  const W=Math.max(300,Math.round(panel.clientWidth-(innerWidth<600?36:60))),H=W<480?200:250,L=46,R=14,Tp=40,B=34;
+  const alts=r.pts.map(p=>p[1]),lo=Math.floor((Math.min(...alts)-250)/250)*250,hi=Math.ceil((Math.max(...alts)+150)/250)*250;
+  const x=i=>L+i*(W-L-R)/(r.pts.length-1),y=a=>Tp+(hi-a)*(H-Tp-B)/(hi-lo);
+  const pts=r.pts.map((p,i)=>[x(i),y(p[1])]),line=smooth(pts),area=line+` L${x(r.pts.length-1)} ${H-B} L${L} ${H-B}Z`;
+  const pi=alts.indexOf(Math.max(...alts)),[px,py]=pts[pi];
+  let grid="";for(let a=lo;a<=hi;a+=Math.max(250,Math.round((hi-lo)/3/250)*250)){grid+=`<line x1="${L}" x2="${W-R}" y1="${y(a)}" y2="${y(a)}" stroke="#D8CEBD" stroke-dasharray="3 5"/><text x="${L-8}" y="${y(a)+4}" text-anchor="end">${fmt(a)}</text>`}
+  const anchor=px>W*.75?"end":px<W*.25?"start":"middle";
+  const dots=pts.map(([a,b],i)=>i===pi?"":`<circle cx="${a}" cy="${b}" r="3.2" fill="#FFFCF6" stroke="#173A31" stroke-width="1.6"/>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${T[lang].chartLabel}: ${r.pts.map(p=>p[0]+" "+fmt(p[1])+" m").join(", ")}">
+   <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#21503F" stop-opacity=".55"/><stop offset="1" stop-color="#21503F" stop-opacity="0"/></linearGradient></defs>
+   ${grid}<path d="${area}" fill="url(#ag)"/><path d="${line}" fill="none" stroke="#173A31" stroke-width="2.6" stroke-linecap="round"/>
+   ${dots}<line x1="${px}" x2="${px}" y1="${py}" y2="${H-B}" stroke="#A33B22" stroke-dasharray="2 4"/>
+   <circle cx="${px}" cy="${py}" r="11" fill="#D39A3A" opacity=".25"/><circle cx="${px}" cy="${py}" r="5.5" fill="#D39A3A" stroke="#FFFCF6" stroke-width="2"/>
+   <text class="peak-t" x="${px}" y="${py-24}" text-anchor="${anchor}">${fmt(r.max)} m</text><text class="peak-n" x="${px}" y="${py-11}" text-anchor="${anchor}">${r.pts[pi][0]}</text>
+   <text x="${L}" y="${H-10}">${r.pts[0][0]}</text><text x="${W-R}" y="${H-10}" text-anchor="end">${r.pts[r.pts.length-1][0]}</text></svg>`;
+}
+const peakIcon='<svg viewBox="0 0 16 12"><path d="M0 12 L6 2 L9 6 L11 3 L16 12Z"/></svg>';
+function renderPanel(){
+  const r=routes[current],t=T[lang];
+  panelIn.innerHTML=`<p class="rp-k">${t.route} 0${current+1}</p><h3 class="rp-title">${t[r.k]}</h3><p class="rp-desc">${t[r.k+"x"]}</p>${chart(r)}
+   <dl class="facts"><div><dt>${t.rpMax}</dt><dd>${fmt(r.max)} m</dd></div><div><dt>${t.rpTime}</dt><dd>${t[r.k+"d"]}</dd></div>
+   <div><dt>${t.rpDiff}</dt><dd><span class="visually">${r.diff} ${t.of5}</span><span class="diff" aria-hidden="true">${[1,2,3,4,5].map(n=>`<span class="${n<=r.diff?"on":""}">${peakIcon}</span>`).join("")}</span></dd></div></dl>`;
+}
+function selectRoute(i,focus){
+  if(i===current&&!focus)return;current=i;renderTabs();
+  if(focus)document.getElementById("tab-"+i).focus();
+  if(reduce){renderPanel();return}
+  panelIn.classList.add("out");setTimeout(()=>{renderPanel();requestAnimationFrame(()=>panelIn.classList.remove("out"))},220);
+}
+tabs.addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)selectRoute(+b.id.split("-")[1])});
+tabs.addEventListener("keydown",e=>{const k={ArrowRight:1,ArrowDown:1,ArrowLeft:-1,ArrowUp:-1}[e.key];
+  if(k){e.preventDefault();selectRoute((current+k+routes.length)%routes.length,true)}
+  else if(e.key==="Home"){e.preventDefault();selectRoute(0,true)}else if(e.key==="End"){e.preventDefault();selectRoute(routes.length-1,true)}});
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(renderPanel,150)});
+
+/* ─── Galería ilustrada ─── */
+const scenes=[
+ {sky:["#F7C77E","#E27D5F"],sun:["#FFF1C9",250,118,34],m:["#B97A80","#6E4560","#33233F"],snow:false,motif:"gate"},
+ {sky:["#9FCDE3","#E8F3F8"],sun:["#FFFFFF",320,60,18],m:["#E6EEF2","#7D93A5","#3B4E5D"],snow:true,motif:"none"},
+ {sky:["#BFDCEC","#F3EAD8"],sun:["#FFF6DD",80,64,20],m:["#C2CB98","#86A055","#5B7638"],snow:false,motif:"moray"},
+ {sky:["#D5E8F2","#F6F1E6"],sun:["#FFFFFF",330,56,16],m:["#CDBDA6","#A48E74","#7C6852"],snow:false,motif:"salt"},
+ {sky:["#F5D7A9","#B5C6D6"],sun:["#FFF4DE",110,80,22],m:["#EEF2F4","#6E8597","#2F4352"],snow:true,motif:"hikers"},
+ {sky:["#C6E4E8","#EEF6F4"],sun:["#FFFFFF",90,52,14],m:["#F1F5F6","#5D8A82","#2C524C"],snow:true,motif:"lake"}
+];
+function rnd(s){return n=>((Math.sin(s*n*12.9898)*43758.5453)%1+1)%1}
+function ridge(r,base,amp,step,off){let d="M0 300",pk=[];for(let x=0;x<=400;x+=step){const yy=base-r(x+off)*amp;d+=` L${x} ${yy.toFixed(1)}`;pk.push([x,yy])}return [d+" L400 300Z",pk]}
+function drawScene(s,i){
+  const r=rnd(i+3),id="g"+i;
+  const [far,fp]=ridge(r,150,90,50,1),[mid]=ridge(r,205,70,40,7),[near]=ridge(r,255,45,32,13);
+  let snow="";if(s.snow)fp.forEach(([x,yy],k)=>{if(k&&k<fp.length-1&&yy<fp[k-1][1]&&yy<fp[k+1][1])snow+=`<path d="M${x} ${yy} L${x-14} ${yy+16} L${x-5} ${yy+12} L${x} ${yy+19} L${x+6} ${yy+12} L${x+14} ${yy+16}Z" fill="#fff"/>`});
+  let m="";
+  if(s.motif==="gate")m=`<path d="M150 300 L158 214 L178 214 L184 300Z M224 300 L230 214 L250 214 L258 300Z" fill="#241A2E"/><path d="M150 214 L258 214 L252 200 L156 200Z" fill="#241A2E"/>`;
+  if(s.motif==="moray")for(let k=0;k<6;k++)m+=`<ellipse cx="200" cy="268" rx="${150-k*24}" ry="${44-k*7}" fill="${k%2?"#7E9A4E":"#9DB46B"}" stroke="#5B7638" stroke-width="1.5"/>`;
+  if(s.motif==="salt"){for(let row=0;row<5;row++)for(let c=0;c<9;c++){const xx=40+c*38+(row%2)*12,yy=212+row*18;m+=`<rect x="${xx}" y="${yy}" width="30" height="13" rx="2" fill="${["#FFFFFF","#F2E9DC","#EBD9CF","#FFFDF8"][(row+c)%4]}" stroke="#A48E74" stroke-width="1"/>`}}
+  if(s.motif==="hikers"){m+=`<path d="M300 246 L318 220 L336 246Z" fill="#FF7A30"/>`;[[120,236],[140,232],[158,229],[180,226]].forEach(([hx,hy])=>{m+=`<circle cx="${hx}" cy="${hy-14}" r="3.4" fill="#1F2D36"/><path d="M${hx} ${hy-10} L${hx} ${hy} M${hx} ${hy} L${hx-4} ${hy+8} M${hx} ${hy} L${hx+4} ${hy+8}" stroke="#1F2D36" stroke-width="2.4" stroke-linecap="round"/><rect x="${hx-6}" y="${hy-10}" width="5" height="7" rx="1.5" fill="#D39A3A"/>`})}
+  if(s.motif==="lake")m=`<ellipse cx="200" cy="262" rx="150" ry="30" fill="#2FA79B"/><ellipse cx="200" cy="258" rx="118" ry="16" fill="#5FC9BD" opacity=".7"/><path d="M110 262 L290 262" stroke="#E9FBF8" stroke-width="2" opacity=".6"/>`;
+  const [sc,sx,sy,sr]=s.sun;
+  return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.sky[0]}"/><stop offset="1" stop-color="${s.sky[1]}"/></linearGradient><linearGradient id="${id}m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient></defs>
+   <rect width="400" height="300" fill="url(#${id})"/><circle cx="${sx}" cy="${sy}" r="${sr*2.2}" fill="${sc}" opacity=".25"/><circle cx="${sx}" cy="${sy}" r="${sr}" fill="${sc}"/>
+   <path d="${far}" fill="${s.m[0]}"/>${snow}<rect y="150" width="400" height="60" fill="url(#${id}m)"/><path d="${mid}" fill="${s.m[1]}"/><path d="${near}" fill="${s.m[2]}"/>${m}</svg>`;
 }
 const gal=document.getElementById("gallery");
-function renderGallery(lang){gal.innerHTML=scenes.map((c,i)=>`<figure class="shot">${drawScene(c,i)}<figcaption>${T[lang].g[i]}</figcaption></figure>`).join("")}
-let lang="es";
+function renderGallery(){gal.innerHTML=scenes.map((s,i)=>`<figure class="shot">${drawScene(s,i)}<figcaption><b>0${i+1}</b>${T[lang].g[i]}</figcaption></figure>`).join("")}
+
+/* ─── Idioma ─── */
 function setLang(l){
   lang=l;document.documentElement.lang=l;
   document.querySelectorAll("[data-i18n]").forEach(el=>{const v=T[l][el.dataset.i18n];if(typeof v==="string")el.textContent=v});
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===l));
-  renderGallery(l);
+  renderGallery();renderTabs();renderPanel();
   try{localStorage.setItem("rq-lang",l)}catch(e){}
 }
 document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+
+/* ─── Avisos de los botones de ejemplo ─── */
 const toast=document.getElementById("toast");let tt;
 document.querySelectorAll("[data-toast]").forEach(b=>b.addEventListener("click",()=>{toast.textContent=T[lang][b.dataset.toast];toast.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove("show"),3200)}));
+
+/* ─── Aparición al hacer scroll y cifras que suben ─── */
+function countUp(el){const to=+el.dataset.count,dec=+(el.dataset.dec||0),suf=el.dataset.suffix||"";
+  const show=v=>{el.textContent=(dec?v.toFixed(dec):fmt(Math.round(v)))+suf};
+  if(reduce){show(to);return}const t0=performance.now(),dur=1400;
+  (function step(now){const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);show(to*e);if(p<1)requestAnimationFrame(step)})(t0)}
+if("IntersectionObserver" in window&&!reduce){
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;en.target.classList.add("in");en.target.querySelectorAll("[data-count]").forEach(countUp);io.unobserve(en.target)}),{threshold:.18,rootMargin:"0px 0px -6% 0px"});
+  document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+}else document.querySelectorAll(".rv").forEach(el=>el.classList.add("in"));
+
 let saved="es";try{saved=localStorage.getItem("rq-lang")||"es"}catch(e){}
 setLang(saved==="en"?"en":"es");
 </script>
