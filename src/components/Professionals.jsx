@@ -61,10 +61,17 @@ export default function Professionals() {
             ))}
           </ul>
 
-          <a className="btn btn--primary pro__cta" href={whatsappLink(professionals.message)} target="_blank" rel="noopener noreferrer">
-            <WhatsAppIcon />
-            {professionals.cta}
-          </a>
+          <div className="pro__actions">
+            <a className="btn btn--primary pro__cta" href={whatsappLink(professionals.message)} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon />
+              {professionals.cta}
+            </a>
+            {/* Demo independiente (public/demo-portafolio/), en la misma pestaña */}
+            <a className="pro__example" href={`${import.meta.env.BASE_URL}${professionals.examplePath}`}>
+              {professionals.example}
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </Reveal>
 
         <Reveal className="pro__visual" delay={0.15}>

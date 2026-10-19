@@ -301,6 +301,9 @@ export const professionals = {
   ],
   cta: 'Quiero mi portafolio',
   message: PORTFOLIO_MESSAGE,
+  // Página independiente en public/demo-portafolio/ (no es parte de React)
+  example: 'Ver un ejemplo',
+  examplePath: 'demo-portafolio/',
   // Maqueta de ejemplo (hecha solo con CSS)
   sample: {
     initials: 'RQ',
